@@ -17,7 +17,7 @@ class ReadConfig:
         if not self.parser.has_section(section_name.upper()):
             raise ValueError('section_name uncorrect')
         options = self.parser.items(section_name.upper())
-        return {name:value for name,value in options.items()}
+        return {name:value for name,value in options}
 
     def get_option(self, section, option):
         if self.parser.has_option(section, option):

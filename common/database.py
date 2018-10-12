@@ -18,7 +18,10 @@ class Db:
             self.con.close()
 
     def get_df(self, sql):
-        dict_data = self.query(sql)
+        try:
+            dict_data = self.query(sql)    
+        except expression as identifier:
+            print("{}".format(identifier))
         if dict_data:
             return pd.DataFrame(dict_data)
 

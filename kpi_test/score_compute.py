@@ -1,7 +1,9 @@
-class KpiScore:
-    def __init__(self, kpi_indicator):
-        self.indicator = kpi_indicator
 
+class IndicatorScore:
+    def __init__(self, indicator_score_config):
+        self.indicator = indicator_score_config
+
+    #非好评
     def get_score_1(self, value):
         if value >= self.indicator.min and value < self.indicator.mid:
             score = (value - self.indicator.mid) / (self.indicator.min - self.indicator.mid) * 55 + 45
@@ -11,7 +13,7 @@ class KpiScore:
             return round(score, 2)
         elif value >= self.indicator.max:
             return 0
-
+    #好评
     def get_score_0(self, value):
         if value > self.indicator.min and value < self.indicator.mid:
             score = (value - self.indicator.min) / (self.indicator.mid - self.indicator.min) * 45
