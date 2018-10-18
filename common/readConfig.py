@@ -20,8 +20,8 @@ class ReadConfig:
         return {name:value for name,value in options}
 
     def get_option(self, section, option):
-        if self.parser.has_option(section, option):
-            return self.parser.get(section, option)
+        if self.parser.has_option(section.upper(), option.lower()):
+            return self.parser.get(section.upper(), option.lower())
         else:
             return None
 
