@@ -3,7 +3,7 @@ from common.database import Db
 from kpi_indicator import BasicIndicators,ServiceIndicator
 from core import get_nametuple
 
-class Tester:
+class IndicatorsGetter:
     def __init__(self):
         self.config = ReadConfig()
 
@@ -60,8 +60,23 @@ class Tester:
         indicators = ServiceIndicator(evaluate, appeal)
         return indicators.get_indicators_value()
 
+def get_indicators_rate():
+    getter=IndicatorsGetter()
+    basic_indicators = getter.get_basic_indicators()
+    service_indicators = getter.get_service_indicators()
+    #超时率
+    timeout_rate = basic_indicators.timeout_waybill / basic_indicators.total_waybill
+    #异常
+    excption_cancel_rate = basic_indicators.exception_waybill / basic_indicators.total_waybill
+    #好评率
+    positive_rate = service_indicators.positive / basic_indicators.total_waybill
+    #坏单率
+    bad_rate = service_indicators.negetive+service_indicators.complain / basic_indicators.total_waybill
+    
+    
+
 if __name__ == '__main__':
-    t = Tester()
+    t = IndicatorsGetter()
     print(t.get_basic_indicators())
     print(t.get_service_indicators())
     # print(t._get_peak())

@@ -28,22 +28,25 @@ class Db:
 
 
 if __name__ == '__main__':
-    from config import HOST, USERNAME, PASSWORD, PORT, DB
-
-    def main(sql):
-        con = Db(host=HOST, port=PORT, user=USERNAME, password=PASSWORD, db=DB)
-        result = con.get_df(sql)
-        return result
-
-    sql = """SELECT
-	*
-    FROM
+    import time
+    t1=time.time()
+    db = Db(host="59.63.222.206", port="33666", user="develop", password="develop+123456", db="fns")
+   
+    sql = """
+    SELECT
+	a.waybill_no,
+	b.created_at,
+	b.star 
+FROM
 	t_waybill AS a
-    WHERE
-	a.finish_time >= '2018-07-30 00:00:00'
-    AND a.finish_time <= '2018-07-30 23:59:59'
-    AND a.point_name = '蜂鸟BOD（金牛万达站）'
+	JOIN t_evaluate_detail AS b ON a.waybill_no = b.tracking_id 
+WHERE
+	a.finish_time >= '2018-09-19 00:00:00' 
+	AND a.finish_time <= '2018-09-19 23:59:59' 
+	AND a.point_name = '江西蜂鸟-金牛万达站' 
+	AND b.star =3
     """
-    df = main(sql)
-    is_positive = df['user_rate'] == '非常满意'
-    print(df[is_positive].shape)
+    rows = db.query(sql)
+    print(len(rows))
+    t2=time.time()
+    print(t2-t1)
